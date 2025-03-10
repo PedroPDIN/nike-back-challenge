@@ -29,12 +29,34 @@ export default class ProductsModel {
     return products
   }
 
-  async getById(productId: number): Promise<IProductWithId | undefined> {
+  async getClothingSizes(): Promise<string[] | undefined> {
+    const TYPES_PRODUCT: string[] = ['Camisa', 'Regata', 'Calção']
     const products = await this.loadFile()
 
-    if (products.length === 0) {
-      return undefined
-    }
+    const filteredTypeProduct = products
+      .filter((product) => TYPES_PRODUCT.includes(product.type))
+      .flatMap((product) => product.available_sizes)
+
+    const resultFilteredTypeProduct = Array.from(new Set(filteredTypeProduct))
+
+    return resultFilteredTypeProduct
+  }
+
+  async getShoeSizes(): Promise<string[] | undefined> {
+    const TYPES_PRODUCT: string[] = ['Acessório']
+    const products = await this.loadFile()
+
+    const filteredTypeProduct = products
+      .filter((product) => TYPES_PRODUCT.includes(product.type))
+      .flatMap((product) => product.available_sizes)
+
+    const resultFilteredTypeProduct = Array.from(new Set(filteredTypeProduct))
+
+    return resultFilteredTypeProduct
+  }
+
+  async getById(productId: number): Promise<IProductWithId | undefined> {
+    const products = await this.loadFile()
 
     const productById = products.find((product) => {
       return product.id === productId

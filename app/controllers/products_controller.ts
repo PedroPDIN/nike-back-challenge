@@ -10,6 +10,18 @@ export default class ProductsController {
     return response.ok(products)
   }
 
+  async indexClothingSize({ response }: HttpContext) {
+    const clothingSize = await this.productsModel.getClothingSizes()
+
+    return response.ok(clothingSize)
+  }
+
+  async indexShoeSize({ response }: HttpContext) {
+    const clothingSize = await this.productsModel.getShoeSizes()
+
+    return response.ok(clothingSize)
+  }
+
   async show({ params, response }: HttpContext) {
     const product = await this.productsModel.getById(+params.id)
 
